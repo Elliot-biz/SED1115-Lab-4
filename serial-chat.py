@@ -26,9 +26,9 @@ while True:
         # Read any available data from the other Pico
         data = uart.read()
 
-        # Only print if something was actually received
+        # Only print if something was actually received   | If something was recieved, also decode it when displaying
         if data is not None:
-            print("Received:", data)
+            print("Received:", data.decode("utf-8"))
     # Check if the local user typed a message
     if poll.poll(0):
         message = sys.stdin.readline().strip()
@@ -60,3 +60,5 @@ while True:
         uart.write(keep_alive)
 
         last_keep_alive = time.ticks_ms()
+    # Prevent the loop from running too fast
+    time.sleep_ms(50) 
